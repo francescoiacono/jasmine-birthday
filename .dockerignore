@@ -1,0 +1,15 @@
+.git
+.vite-hooks
+.vscode
+.idea
+
+node_modules
+dist
+dist-ssr
+styled-system
+styled-system-studio
+
+logs
+*.log
+*.local
+.DS_Store
