@@ -36,6 +36,7 @@ export const slides = [
     type: "single-photo",
     title: "Soft landing",
     caption: "Proof that even loud nights can keep a very soft corner.",
+    captionPlacement: "top",
     image: {
       src: photoThree,
       alt: "Jasmine resting her head against someone while sitting in a pub.",

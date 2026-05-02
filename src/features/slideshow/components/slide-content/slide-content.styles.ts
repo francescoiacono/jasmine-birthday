@@ -31,6 +31,9 @@ export const styles = {
     backdropFilter: "blur(12px)",
     boxShadow: "0 18px 44px rgba(0, 0, 0, 0.18)",
   }),
+  photoCaptionTop: css({
+    alignSelf: "start",
+  }),
   slideTitle: css({
     m: "0",
     fontSize: { base: "2rem", sm: "2.6rem" },
@@ -122,5 +125,8 @@ export const styles = {
     borderColor: "rgba(59, 47, 47, 0.13)",
     borderRadius: "8px",
     bg: "rgba(255, 247, 237, 0.86)",
+  }),
+  collageCaptionTop: css({
+    order: "-1",
   }),
 };

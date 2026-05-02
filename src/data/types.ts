@@ -6,6 +6,9 @@ export interface SlideImage {
   alt: string;
 }
 
+/** Supported positions for slide captions. */
+export type CaptionPlacement = "bottom" | "top";
+
 /** Shared content fields for every slideshow slide. */
 interface BaseSlide {
   /** Stable slide identifier used for rendering and transitions. */
@@ -28,6 +31,8 @@ export interface SinglePhotoSlide extends BaseSlide {
   type: "single-photo";
   /** Short supporting message for the photo. */
   caption: string;
+  /** Optional position for the photo caption; defaults to bottom. */
+  captionPlacement?: CaptionPlacement;
   /** Imported Vite asset URL and alt text for the photo. */
   image: SlideImage;
 }
@@ -38,6 +43,8 @@ export interface PhotoCollageSlide extends BaseSlide {
   type: "photo-collage";
   /** Short supporting message for the collage. */
   caption: string;
+  /** Optional position for the collage caption; defaults to bottom. */
+  captionPlacement?: CaptionPlacement;
   /** Imported Vite asset URLs and alt text for each collage item. */
   images: readonly SlideImage[];
 }

@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { Gift, Heart } from "lucide-react";
 import type { Slide } from "@/data";
 import { copy } from "@/i18n/copy";
@@ -11,11 +12,13 @@ export interface SlideContentProps {
 
 export const SlideContent = ({ slide }: SlideContentProps) => {
   if (slide.type === "single-photo") {
+    const isCaptionTop = slide.captionPlacement === "top";
+
     return (
       <>
         <img className={styles.photoImage} src={slide.image.src} alt={slide.image.alt} />
         <div className={styles.photoShade} />
-        <div className={styles.photoCaption}>
+        <div className={clsx(styles.photoCaption, isCaptionTop && styles.photoCaptionTop)}>
           <h2 className={styles.slideTitle} id={`slide-title-${slide.id}`}>
             {slide.title}
           </h2>
@@ -26,6 +29,8 @@ export const SlideContent = ({ slide }: SlideContentProps) => {
   }
 
   if (slide.type === "photo-collage") {
+    const isCaptionTop = slide.captionPlacement === "top";
+
     return (
       <div className={styles.collageLayout}>
         <div className={styles.collageGrid}>
@@ -35,7 +40,7 @@ export const SlideContent = ({ slide }: SlideContentProps) => {
             </div>
           ))}
         </div>
-        <div className={styles.collageCaption}>
+        <div className={clsx(styles.collageCaption, isCaptionTop && styles.collageCaptionTop)}>
           <h2 className={styles.slideTitle} id={`slide-title-${slide.id}`}>
             {slide.title}
           </h2>

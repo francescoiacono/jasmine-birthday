@@ -1,2 +1,2 @@
 export { slides } from "./slides";
-export type { Slide, SlideImage } from "./types";
+export type { CaptionPlacement, Slide, SlideImage } from "./types";
