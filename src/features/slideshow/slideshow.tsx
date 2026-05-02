@@ -37,9 +37,13 @@ export const Slideshow = () => {
         }}
       >
         <ProgressHeader
+          activeSoundtrackTitle={slideshow.activeSoundtrack?.title}
+          canControlMusic={slideshow.canControlMusic}
           currentPosition={slideshow.currentPosition}
+          isMusicPlaying={slideshow.isMusicPlaying}
           progressPercent={slideshow.progressPercent}
           totalSlides={slideshow.totalSlides}
+          onToggleMusic={slideshow.toggleMusicPlayback}
         />
         <SlideStage
           direction={slideshow.direction}

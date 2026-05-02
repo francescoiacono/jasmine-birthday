@@ -17,6 +17,21 @@ export const getSlideImageSources = (slide: Slide): readonly string[] => {
   return [];
 };
 
+/** Returns the latest soundtrack cue at or before the requested slide. */
+export const getActiveSlideSoundtrack = (allSlides: readonly Slide[], currentIndex: number) => {
+  const safeIndex = clampSlideIndex(currentIndex, allSlides.length);
+
+  for (let index = safeIndex; index >= 0; index -= 1) {
+    const slideSoundtrack = allSlides[index]?.soundtrack;
+
+    if (slideSoundtrack !== undefined) {
+      return slideSoundtrack;
+    }
+  }
+
+  return undefined;
+};
+
 /** Preloads the images for a slide without adding them to visible markup. */
 export const preloadSlideImages = (slide: Slide) => {
   for (const source of getSlideImageSources(slide)) {
