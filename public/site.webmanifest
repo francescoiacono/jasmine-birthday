@@ -1,6 +1,8 @@
 {
   "name": "Jasmine's Birthday Trip",
   "short_name": "Jasmine Trip",
+  "description": "A birthday slideshow trip made for Jasmine.",
+  "start_url": "/",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
@@ -15,5 +17,6 @@
   ],
   "theme_color": "#FFF7ED",
   "background_color": "#FFF7ED",
-  "display": "standalone"
+  "display": "standalone",
+  "orientation": "portrait"
 }
