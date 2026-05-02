@@ -1,7 +1,3 @@
-import { styles } from "./app.styles";
+import { Slideshow } from "@/features/slideshow";
 
-export const App = () => (
-  <main className={styles.shell}>
-    <h1 className={styles.title}>Hello World</h1>
-  </main>
-);
+export const App = () => <Slideshow />;

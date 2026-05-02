@@ -74,6 +74,7 @@ Technical direction:
 - Keep app-level wiring under `src/app/`.
 - Keep `src/main.tsx` as the React entry point.
 - Put slideshow-specific UI, state, helpers, and tests under `src/features/slideshow/`.
+- Put each slideshow subcomponent in its own lowercase kebab-case folder with a `.tsx` file, a colocated `.styles.ts` file, and an `index.ts` export.
 - Put shared reusable UI under `src/components/` only when it is genuinely useful outside the slideshow feature.
 - Put typed slide content under `src/data/`.
 - Put photos and audio under `src/assets/`.
@@ -271,7 +272,7 @@ location / {
 
 ## Documentation
 
-- Add TSDoc comments to utility functions, including utility functions defined inside components.
+- Add TSDoc comments to utility functions and hook functions, including functions defined inside components or hooks.
 - Add a one-line TSDoc summary to each type and interface.
 - Add a one-line TSDoc comment to each attribute in each type or interface.
 - Add inline comments only for complex logic or major function sections where they improve readability.
