@@ -2,6 +2,7 @@ import photoOne from "@/assets/photos/image_01.webp";
 import photoTwo from "@/assets/photos/image_02.webp";
 import photoThree from "@/assets/photos/image_03.webp";
 import photoFour from "@/assets/photos/image_04.webp";
+import { soundtrack } from "./soundtrack";
 import type { Slide } from "./types";
 
 export const slides = [
@@ -10,6 +11,7 @@ export const slides = [
     type: "message",
     title: "A little trip for your birthday",
     body: "Since you are far away this year, I made you a tiny passport through some of my favourite Jasmine moments.",
+    soundtrack: soundtrack.benediction,
   },
   {
     id: "laughing-close-up",
@@ -37,6 +39,7 @@ export const slides = [
     title: "Soft landing",
     caption: "Proof that even loud nights can keep a very soft corner.",
     captionPlacement: "top",
+    soundtrack: soundtrack.dancingInTheMoonlight,
     image: {
       src: photoThree,
       alt: "Jasmine resting her head against someone while sitting in a pub.",

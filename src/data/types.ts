@@ -9,12 +9,24 @@ export interface SlideImage {
 /** Supported positions for slide captions. */
 export type CaptionPlacement = "bottom" | "top";
 
+/** Audio track that can be cued by a slideshow slide. */
+export interface SlideSoundtrack {
+  /** Stable identifier for the audio track. */
+  id: string;
+  /** Imported Vite asset URL for the audio file. */
+  src: string;
+  /** Human-readable track title used by music controls. */
+  title: string;
+}
+
 /** Shared content fields for every slideshow slide. */
 interface BaseSlide {
   /** Stable slide identifier used for rendering and transitions. */
   id: string;
   /** Short heading shown to the viewer. */
   title: string;
+  /** Optional audio track that starts from this slide onward. */
+  soundtrack?: SlideSoundtrack;
 }
 
 /** Text-only slide used for story beats and wishes. */

@@ -115,6 +115,8 @@ src/
 
 - Define slides in TypeScript data files, not inline in JSX.
 - Use discriminated union types for slide variants such as intro, message, single photo, collage, and final slide.
+- Define reusable soundtrack track metadata in `src/data/soundtrack.ts`, importing local audio assets from `src/assets/audio/`.
+- Use an optional `soundtrack` cue on a slide to start that track from the slide onward; the cue remains active until another slide defines a different soundtrack.
 - Keep slide copy concise and intentional.
 - Every informative image needs useful alt text in the slide data.
 - Decorative images should be marked so components can render empty alt text.
