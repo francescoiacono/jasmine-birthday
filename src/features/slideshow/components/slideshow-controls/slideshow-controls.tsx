@@ -24,21 +24,36 @@ export const SlideshowControls = ({
   onReplay,
 }: SlideshowControlsProps) => (
   <footer className={styles.controls}>
-    <button className={styles.navButton} disabled={!canGoBack} type="button" onClick={onPrevious}>
-      <ArrowLeft aria-hidden="true" size={18} />
-      {copy.slideshow.previousButton}
+    <button
+      aria-label={copy.slideshow.previousButton}
+      className={styles.navButton}
+      disabled={!canGoBack}
+      title={copy.slideshow.previousButton}
+      type="button"
+      onClick={onPrevious}
+    >
+      <ArrowLeft aria-hidden="true" size={26} />
     </button>
 
     {isFinalSlide ? (
-      <button className={styles.replayButton} type="button" onClick={onReplay}>
-        <RotateCcw aria-hidden="true" size={18} />
-        {copy.slideshow.replayButton}
-      </button>
+      <div className={styles.replayArea}>
+        <button className={styles.replayButton} type="button" onClick={onReplay}>
+          <RotateCcw aria-hidden="true" size={18} />
+          {copy.slideshow.replayButton}
+        </button>
+      </div>
     ) : (
-      <button className={styles.navButton} type="button" onClick={onNext}>
-        {copy.slideshow.nextButton}
-        <ArrowRight aria-hidden="true" size={18} />
-      </button>
+      <>
+        <button
+          aria-label={copy.slideshow.nextButton}
+          className={styles.nextButton}
+          title={copy.slideshow.nextButton}
+          type="button"
+          onClick={onNext}
+        >
+          <ArrowRight aria-hidden="true" size={30} />
+        </button>
+      </>
     )}
   </footer>
 );
