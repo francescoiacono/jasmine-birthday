@@ -9,7 +9,8 @@
     "lint": "vp lint .",
     "panda:codegen": "panda codegen",
     "preview": "vp preview",
-    "prepare": "vp config && panda codegen"
+    "prepare": "vp config && panda codegen",
+    "images:optimize": "bash scripts/optimise-images.sh"
   },
   "dependencies": {
     "clsx": "^2.1.1",
