@@ -52,7 +52,7 @@ export interface UseSlideshowResult {
 /** Manages slideshow state, derived values, navigation, and image preloading. */
 export const useSlideshow = (): UseSlideshowResult => {
   const [hasStarted, setHasStarted] = useState(false);
-  const [musicEnabled, setMusicEnabled] = useState<boolean | null>(null);
+  const [musicEnabled, setMusicEnabled] = useState<boolean | null>(true);
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(1);
