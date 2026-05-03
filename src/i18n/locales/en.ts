@@ -15,6 +15,7 @@ export const en = {
     muteMusicLabel: (trackTitle: string) => `Mute ${trackTitle}`,
     musicYes: "Yes",
     nextButton: "Next",
+    continueHint: "Tap to continue",
     passportBookletTitle: "Birthday passport",
     passportDateLabel: "Date",
     passportDateValue: "It's your day",

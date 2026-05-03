@@ -29,8 +29,8 @@ export const SlideshowControls = ({
       aria-label={copy.slideshow.previousButton}
       className={styles.previousButton}
       disabled={!canGoBack}
-      leftIcon={<ArrowLeft aria-hidden="true" size={26} />}
-      size="iconMd"
+      leftIcon={<ArrowLeft aria-hidden="true" size={22} />}
+      size="iconControl"
       title={copy.slideshow.previousButton}
       tone="ink"
       onClick={onPrevious}
@@ -49,15 +49,18 @@ export const SlideshowControls = ({
         </Button>
       </div>
     ) : (
-      <Button
-        aria-label={copy.slideshow.nextButton}
-        className={styles.nextButton}
-        leftIcon={<ArrowRight aria-hidden="true" size={30} />}
-        size="iconLg"
-        title={copy.slideshow.nextButton}
-        variant="primary"
-        onClick={onNext}
-      />
+      <>
+        <p className={styles.continueHint}>{copy.slideshow.continueHint}</p>
+        <Button
+          aria-label={copy.slideshow.nextButton}
+          className={styles.nextButton}
+          leftIcon={<ArrowRight aria-hidden="true" size={24} />}
+          size="iconControl"
+          title={copy.slideshow.nextButton}
+          variant="primary"
+          onClick={onNext}
+        />
+      </>
     )}
   </footer>
 );
