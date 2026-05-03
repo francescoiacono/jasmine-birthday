@@ -1,6 +1,7 @@
 import clsx from "clsx";
-import { Gift, Map, Music, VolumeX } from "lucide-react";
+import { Music, Plane, VolumeX } from "lucide-react";
 import { copy } from "@/i18n/copy";
+import { BirthdayPassport } from "../birthday-passport";
 import { styles } from "./intro-screen.styles";
 
 /** Props for the intro screen shown before the journey starts. */
@@ -16,17 +17,25 @@ export interface IntroScreenProps {
 export const IntroScreen = ({ musicEnabled, onChooseMusic, onStart }: IntroScreenProps) => (
   <section className={styles.introScreen} aria-labelledby="intro-title">
     <div className={styles.introContent}>
-      <div className={styles.introMark}>
-        <Map aria-hidden="true" size={16} />
-        {copy.slideshow.introStamp}
-      </div>
-
       <div>
-        <h1 className={styles.introTitle} id="intro-title">
-          {copy.slideshow.introTitle}
+        <h1 aria-label={copy.slideshow.introTitle} className={styles.introTitle} id="intro-title">
+          {copy.slideshow.introTitleLines.map((line, index) => {
+            const isLastLine = index === copy.slideshow.introTitleLines.length - 1;
+
+            return (
+              <span aria-hidden="true" className={styles.introTitleLine} key={line}>
+                {line}
+                {isLastLine ? (
+                  <span className={styles.introTitleCake}>{copy.slideshow.introTitleCake}</span>
+                ) : null}
+              </span>
+            );
+          })}
         </h1>
         <p className={styles.introBody}>{copy.slideshow.introBody}</p>
       </div>
+
+      <BirthdayPassport />
 
       <div className={styles.choicePanel}>
         <p className={styles.musicPrompt}>{copy.slideshow.musicPrompt}</p>
@@ -62,8 +71,8 @@ export const IntroScreen = ({ musicEnabled, onChooseMusic, onStart }: IntroScree
           type="button"
           onClick={onStart}
         >
-          <Gift aria-hidden="true" size={19} />
           {copy.slideshow.startButton}
+          <Plane aria-hidden="true" size={19} />
         </button>
       </div>
     </div>
