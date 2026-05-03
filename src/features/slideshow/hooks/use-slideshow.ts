@@ -3,6 +3,11 @@ import { slides, type Slide, type SlideSoundtrack } from "@/data";
 import { clampSlideIndex, getActiveSlideSoundtrack, preloadSlideImages } from "../utils";
 
 const soundtrackVolume = 0.72;
+const soundtrackFadeInDurationMs = 900;
+const soundtrackFadeOutDurationMs = 650;
+
+/** Keeps an audio volume value inside the browser-supported range. */
+const clampAudioVolume = (volume: number) => Math.min(Math.max(volume, 0), 1);
 
 /** State and actions used to render and control the slideshow. */
 export interface UseSlideshowResult {
@@ -52,6 +57,10 @@ export const useSlideshow = (): UseSlideshowResult => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(1);
   const audioElementRef = useRef<HTMLAudioElement | null>(null);
+  const audioFadeCompleteRef = useRef<((didComplete: boolean) => void) | null>(null);
+  const audioFadeFrameRef = useRef<number | null>(null);
+  const audioFadeRunRef = useRef(0);
+  const audioOperationIdRef = useRef(0);
   const activeSoundtrackIdRef = useRef<string | null>(null);
 
   const slide = slides[currentIndex];
@@ -63,6 +72,82 @@ export const useSlideshow = (): UseSlideshowResult => {
   const canGoBack = currentIndex > 0;
   const canControlMusic = hasStarted && activeSoundtrack !== undefined;
 
+  /** Starts a new audio operation so stale async playback work can be ignored. */
+  const beginAudioOperation = useCallback(() => {
+    audioOperationIdRef.current += 1;
+    return audioOperationIdRef.current;
+  }, []);
+
+  /** Returns whether an async audio operation still owns the player. */
+  const isCurrentAudioOperation = useCallback(
+    (operationId: number) => audioOperationIdRef.current === operationId,
+    [],
+  );
+
+  /** Cancels the active volume fade and resolves its pending work as cancelled. */
+  const cancelAudioFade = useCallback(() => {
+    if (audioFadeFrameRef.current !== null) {
+      cancelAnimationFrame(audioFadeFrameRef.current);
+      audioFadeFrameRef.current = null;
+    }
+
+    const completeAudioFade = audioFadeCompleteRef.current;
+    audioFadeCompleteRef.current = null;
+    audioFadeRunRef.current += 1;
+    completeAudioFade?.(false);
+  }, []);
+
+  /** Fades the audio element to a target volume and reports whether it completed. */
+  const fadeAudioVolume = useCallback(
+    (audioElement: HTMLAudioElement, targetVolume: number, durationMs: number) => {
+      cancelAudioFade();
+
+      const fadeRun = audioFadeRunRef.current;
+      const startVolume = clampAudioVolume(audioElement.volume);
+      const safeTargetVolume = clampAudioVolume(targetVolume);
+      audioElement.volume = startVolume;
+
+      if (durationMs <= 0 || Math.abs(startVolume - safeTargetVolume) < 0.01) {
+        audioElement.volume = safeTargetVolume;
+        return Promise.resolve(true);
+      }
+
+      return new Promise<boolean>((resolve) => {
+        const startTime = performance.now();
+
+        /** Advances the current audio fade by one animation frame. */
+        const stepFade = (timestamp: number) => {
+          if (audioFadeRunRef.current !== fadeRun) {
+            audioFadeFrameRef.current = null;
+            audioFadeCompleteRef.current = null;
+            resolve(false);
+            return;
+          }
+
+          const progress = Math.min((timestamp - startTime) / durationMs, 1);
+          const easedProgress = progress * progress * (3 - 2 * progress);
+          audioElement.volume = clampAudioVolume(
+            startVolume + (safeTargetVolume - startVolume) * easedProgress,
+          );
+
+          if (progress < 1) {
+            audioFadeFrameRef.current = requestAnimationFrame(stepFade);
+            return;
+          }
+
+          audioFadeFrameRef.current = null;
+          audioFadeCompleteRef.current = null;
+          audioElement.volume = safeTargetVolume;
+          resolve(true);
+        };
+
+        audioFadeCompleteRef.current = resolve;
+        audioFadeFrameRef.current = requestAnimationFrame(stepFade);
+      });
+    },
+    [cancelAudioFade],
+  );
+
   /** Creates the audio element lazily after a viewer gesture has enabled playback. */
   const getAudioElement = useCallback(() => {
     if (audioElementRef.current !== null) {
@@ -72,35 +157,83 @@ export const useSlideshow = (): UseSlideshowResult => {
     const audioElement = new Audio();
     audioElement.loop = true;
     audioElement.preload = "auto";
-    audioElement.volume = soundtrackVolume;
+    audioElement.volume = 0;
     audioElementRef.current = audioElement;
 
     return audioElement;
   }, []);
 
-  /** Starts or switches the soundtrack to the requested track. */
+  /** Starts or switches the soundtrack to the requested track with a volume fade. */
   const playSoundtrack = useCallback(
-    (soundtrack: SlideSoundtrack) => {
+    async (soundtrack: SlideSoundtrack) => {
+      const operationId = beginAudioOperation();
       const audioElement = getAudioElement();
+      const isNewSoundtrack = activeSoundtrackIdRef.current !== soundtrack.id;
       audioElement.loop = true;
-      audioElement.volume = soundtrackVolume;
 
-      if (activeSoundtrackIdRef.current !== soundtrack.id) {
+      if (isNewSoundtrack) {
+        if (!audioElement.paused && audioElement.volume > 0) {
+          const didFadeOut = await fadeAudioVolume(audioElement, 0, soundtrackFadeOutDurationMs);
+
+          if (!didFadeOut || !isCurrentAudioOperation(operationId)) {
+            return;
+          }
+        }
+
         audioElement.pause();
         audioElement.src = soundtrack.src;
         audioElement.currentTime = 0;
+        audioElement.volume = 0;
         activeSoundtrackIdRef.current = soundtrack.id;
       }
 
-      return audioElement.play();
+      if (audioElement.paused) {
+        audioElement.volume = 0;
+      }
+
+      await audioElement.play();
+
+      if (!isCurrentAudioOperation(operationId)) {
+        return;
+      }
+
+      await fadeAudioVolume(audioElement, soundtrackVolume, soundtrackFadeInDurationMs);
     },
-    [getAudioElement],
+    [beginAudioOperation, fadeAudioVolume, getAudioElement, isCurrentAudioOperation],
   );
 
-  /** Pauses the current soundtrack without clearing the selected track. */
-  const pauseSoundtrack = useCallback(() => {
-    audioElementRef.current?.pause();
-  }, []);
+  /** Fades out and pauses the current soundtrack without clearing the selected track. */
+  const pauseSoundtrack = useCallback(async () => {
+    const operationId = beginAudioOperation();
+    const audioElement = audioElementRef.current;
+
+    if (audioElement === null) {
+      cancelAudioFade();
+      return;
+    }
+
+    if (!audioElement.paused && audioElement.volume > 0) {
+      const didFadeOut = await fadeAudioVolume(audioElement, 0, soundtrackFadeOutDurationMs);
+
+      if (!didFadeOut || !isCurrentAudioOperation(operationId)) {
+        return;
+      }
+    }
+
+    audioElement.pause();
+    audioElement.volume = 0;
+  }, [beginAudioOperation, cancelAudioFade, fadeAudioVolume, isCurrentAudioOperation]);
+
+  /** Stops soundtrack playback immediately for teardown where a fade cannot finish. */
+  const stopSoundtrackImmediately = useCallback(() => {
+    beginAudioOperation();
+    cancelAudioFade();
+
+    if (audioElementRef.current !== null) {
+      audioElementRef.current.pause();
+      audioElementRef.current.volume = 0;
+    }
+  }, [beginAudioOperation, cancelAudioFade]);
 
   useEffect(() => {
     // Preload the visible slide plus the next two slides to keep navigation responsive.
@@ -111,7 +244,7 @@ export const useSlideshow = (): UseSlideshowResult => {
 
   useEffect(() => {
     if (!canControlMusic || !isMusicPlaying || activeSoundtrack === undefined) {
-      pauseSoundtrack();
+      void pauseSoundtrack();
       return;
     }
 
@@ -120,11 +253,11 @@ export const useSlideshow = (): UseSlideshowResult => {
 
   useEffect(
     () => () => {
-      audioElementRef.current?.pause();
+      stopSoundtrackImmediately();
       audioElementRef.current = null;
       activeSoundtrackIdRef.current = null;
     },
-    [],
+    [stopSoundtrackImmediately],
   );
 
   /** Moves to a requested slide index while preserving transition direction. */
@@ -151,7 +284,7 @@ export const useSlideshow = (): UseSlideshowResult => {
 
     if (!shouldPlay) {
       setIsMusicPlaying(false);
-      pauseSoundtrack();
+      void pauseSoundtrack();
     }
   };
 
@@ -183,7 +316,7 @@ export const useSlideshow = (): UseSlideshowResult => {
 
     if (isMusicPlaying) {
       setIsMusicPlaying(false);
-      pauseSoundtrack();
+      void pauseSoundtrack();
       return;
     }
 
