@@ -8,7 +8,9 @@ export const styles = {
     h: { base: "clamp(11.25rem, 27svh, 14.5rem)", sm: "18rem", md: "21rem" },
     justifySelf: "center",
     m: "0",
-    filter: "drop-shadow(0 24px 34px rgba(59, 47, 47, 0.13))",
+    filter: "drop-shadow(0 10px 16px rgba(59, 47, 47, 0.08))",
+    pointerEvents: "none",
+    userSelect: "none",
   }),
   booklet: css({
     position: "absolute",
@@ -29,7 +31,7 @@ export const styles = {
     borderRadius: { base: "14px", md: "18px" },
     color: "rgba(161, 112, 41, 0.92)",
     bg: "linear-gradient(145deg, #FADADD, #F6A9B4)",
-    boxShadow: "inset 0 0 0 1px rgba(255, 247, 237, 0.28), 0 16px 26px rgba(232, 93, 117, 0.18)",
+    boxShadow: "inset 0 0 0 1px rgba(255, 247, 237, 0.28), 0 8px 14px rgba(232, 93, 117, 0.1)",
     transform: "rotate(-5deg)",
     _before: {
       content: "''",
@@ -82,7 +84,7 @@ export const styles = {
     borderRadius: { base: "14px", md: "18px" },
     color: "rgba(161, 112, 41, 0.92)",
     bg: "rgba(255, 247, 237, 0.96)",
-    boxShadow: "inset 0 0 0 1px rgba(255, 255, 255, 0.72), 0 16px 30px rgba(59, 47, 47, 0.12)",
+    boxShadow: "inset 0 0 0 1px rgba(255, 255, 255, 0.72), 0 8px 16px rgba(59, 47, 47, 0.08)",
     _before: {
       content: "''",
       position: "absolute",

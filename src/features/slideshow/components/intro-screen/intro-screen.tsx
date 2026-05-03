@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { Music, Plane, VolumeX } from "lucide-react";
+import { Music, Plane } from "lucide-react";
 import { copy } from "@/i18n/copy";
 import { BirthdayPassport } from "../birthday-passport";
 import { styles } from "./intro-screen.styles";
@@ -38,32 +38,36 @@ export const IntroScreen = ({ musicEnabled, onChooseMusic, onStart }: IntroScree
       <BirthdayPassport />
 
       <div className={styles.choicePanel}>
-        <p className={styles.musicPrompt}>{copy.slideshow.musicPrompt}</p>
-        <div className={styles.choiceGrid}>
-          <button
-            aria-pressed={musicEnabled === true}
-            className={clsx(
-              styles.choiceButton,
-              musicEnabled === true && styles.choiceButtonSelected,
-            )}
-            type="button"
-            onClick={() => onChooseMusic(true)}
-          >
-            <Music aria-hidden="true" size={18} />
-            {copy.slideshow.musicYes}
-          </button>
-          <button
-            aria-pressed={musicEnabled === false}
-            className={clsx(
-              styles.choiceButton,
-              musicEnabled === false && styles.choiceButtonSelected,
-            )}
-            type="button"
-            onClick={() => onChooseMusic(false)}
-          >
-            <VolumeX aria-hidden="true" size={18} />
-            {copy.slideshow.musicNo}
-          </button>
+        <div className={styles.musicChoicePanel}>
+          <p className={styles.musicPrompt}>
+            <Music aria-hidden="true" size={22} />
+            {copy.slideshow.musicPrompt}
+          </p>
+          <div className={styles.choiceGrid}>
+            <button
+              aria-pressed={musicEnabled === true}
+              className={clsx(
+                styles.choiceButton,
+                musicEnabled === true && styles.choiceButtonSelected,
+              )}
+              type="button"
+              onClick={() => onChooseMusic(true)}
+            >
+              <Music aria-hidden="true" size={24} />
+              {copy.slideshow.musicYes}
+            </button>
+            <button
+              aria-pressed={musicEnabled === false}
+              className={clsx(
+                styles.choiceButton,
+                musicEnabled === false && styles.choiceButtonSelected,
+              )}
+              type="button"
+              onClick={() => onChooseMusic(false)}
+            >
+              {copy.slideshow.musicNo}
+            </button>
+          </div>
         </div>
         <button
           className={styles.primaryButton}
