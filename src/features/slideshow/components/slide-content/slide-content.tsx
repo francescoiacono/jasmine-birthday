@@ -19,10 +19,10 @@ export const SlideContent = ({ slide }: SlideContentProps) => {
         <img className={styles.photoImage} src={slide.image.src} alt={slide.image.alt} />
         <div className={styles.photoShade} />
         <div className={clsx(styles.photoCaption, isCaptionTop && styles.photoCaptionTop)}>
-          <h2 className={styles.slideTitle} id={`slide-title-${slide.id}`}>
+          <h2 className={styles.captionTitle} id={`slide-title-${slide.id}`}>
             {slide.title}
           </h2>
-          <p className={styles.slideText}>{slide.caption}</p>
+          <p className={styles.captionText}>{slide.caption}</p>
         </div>
       </>
     );
@@ -41,10 +41,10 @@ export const SlideContent = ({ slide }: SlideContentProps) => {
           ))}
         </div>
         <div className={clsx(styles.collageCaption, isCaptionTop && styles.collageCaptionTop)}>
-          <h2 className={styles.slideTitle} id={`slide-title-${slide.id}`}>
+          <h2 className={styles.captionTitle} id={`slide-title-${slide.id}`}>
             {slide.title}
           </h2>
-          <p className={styles.slideText}>{slide.caption}</p>
+          <p className={styles.captionText}>{slide.caption}</p>
         </div>
       </div>
     );
