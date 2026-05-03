@@ -1,6 +1,22 @@
 import { css } from "@styled-system/css";
 
 export const styles = {
+  photoFrame: css({
+    position: "relative",
+    width: "min(100%, 44rem)",
+    h: "100%",
+    minH: "0",
+    justifySelf: "center",
+    display: "grid",
+    overflow: "hidden",
+    p: { base: "4", sm: "5" },
+    borderWidth: "1px",
+    borderStyle: "solid",
+    borderColor: "rgba(255, 247, 237, 0.5)",
+    borderRadius: { base: "18px", sm: "24px" },
+    bg: "rgba(59, 47, 47, 0.08)",
+    boxShadow: "0 10px 22px rgba(59, 47, 47, 0.12)",
+  }),
   photoImage: css({
     position: "absolute",
     inset: "0",
@@ -25,7 +41,7 @@ export const styles = {
     borderWidth: "1px",
     borderStyle: "solid",
     borderColor: "rgba(255, 247, 237, 0.36)",
-    borderRadius: { base: "24px", sm: "30px" },
+    borderRadius: { base: "18px", sm: "24px" },
     color: "cream",
     bg: "rgba(44, 34, 32, 0.58)",
     backdropFilter: "blur(18px) saturate(1.08)",
@@ -37,12 +53,11 @@ export const styles = {
   captionTitle: css({
     m: "0",
     color: "cream",
-    fontSize: { base: "2.25rem", sm: "3.1rem", md: "3.7rem" },
+    fontSize: { base: "1.85rem", sm: "2.75rem", md: "3.45rem" },
     fontWeight: "900",
     lineHeight: "1.02",
     letterSpacing: "0",
     textShadow: "0 2px 18px rgba(0, 0, 0, 0.22)",
-    textWrap: "balance",
   }),
   captionText: css({
     position: "relative",
@@ -59,17 +74,6 @@ export const styles = {
       right: "0",
       h: "1px",
       bg: "linear-gradient(90deg, rgba(255, 247, 237, 0), rgba(255, 247, 237, 0.28), rgba(255, 247, 237, 0))",
-    },
-    _after: {
-      content: "''",
-      position: "absolute",
-      top: "-0.18rem",
-      left: "50%",
-      w: "0.42rem",
-      h: "0.42rem",
-      borderRadius: "1px",
-      bg: "rgba(249, 115, 91, 0.46)",
-      transform: "translateX(-50%) rotate(45deg)",
     },
   }),
   slideTitle: css({

@@ -1,5 +1,6 @@
 import { Map, Volume2, VolumeX } from "lucide-react";
 import { copy } from "@/i18n/copy";
+import { Button } from "../button";
 import { styles } from "./progress-header.styles";
 
 /** Props for the slideshow progress header. */
@@ -37,9 +38,9 @@ export const ProgressHeader = ({
   return (
     <header className={styles.progressArea}>
       <div className={styles.progressMeta}>
-        <span className={styles.progressLabel}>
+        <span className={styles.progressStatus} aria-live="polite">
           <Map aria-hidden="true" size={14} />
-          {copy.slideshow.progressLabel}
+          {copy.slideshow.slideStatus(currentPosition, totalSlides)}
         </span>
         <div
           aria-label={copy.slideshow.progressLabel}
@@ -69,24 +70,24 @@ export const ProgressHeader = ({
             </svg>
           </span>
         </div>
-        <span className={styles.progressActions}>
-          <span aria-live="polite">{copy.slideshow.slideStatus(currentPosition, totalSlides)}</span>
-          {canControlMusic ? (
-            <button
+        {canControlMusic ? (
+          <span className={styles.progressActions}>
+            <Button
               aria-label={musicToggleLabel}
-              className={styles.musicButton}
+              leftIcon={
+                isMusicPlaying ? (
+                  <Volume2 aria-hidden="true" size={14} />
+                ) : (
+                  <VolumeX aria-hidden="true" size={14} />
+                )
+              }
+              size="iconSm"
               title={musicToggleLabel}
-              type="button"
+              tone="ink"
               onClick={onToggleMusic}
-            >
-              {isMusicPlaying ? (
-                <Volume2 aria-hidden="true" size={14} />
-              ) : (
-                <VolumeX aria-hidden="true" size={14} />
-              )}
-            </button>
-          ) : null}
-        </span>
+            />
+          </span>
+        ) : null}
       </div>
     </header>
   );

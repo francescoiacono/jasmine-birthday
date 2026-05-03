@@ -15,7 +15,7 @@ export const SlideContent = ({ slide }: SlideContentProps) => {
     const isCaptionTop = slide.captionPlacement === "top";
 
     return (
-      <>
+      <div className={styles.photoFrame}>
         <img className={styles.photoImage} src={slide.image.src} alt={slide.image.alt} />
         <div className={styles.photoShade} />
         <div className={clsx(styles.photoCaption, isCaptionTop && styles.photoCaptionTop)}>
@@ -24,7 +24,7 @@ export const SlideContent = ({ slide }: SlideContentProps) => {
           </h2>
           <p className={styles.captionText}>{slide.caption}</p>
         </div>
-      </>
+      </div>
     );
   }
 
