@@ -28,7 +28,7 @@ export const styles = {
     lineHeight: "1.1",
     letterSpacing: "0",
     textAlign: "center",
-    textShadow: "0 2px 0 rgba(255, 247, 237, 0.78)",
+    textShadow: `0 2px 0 var(--colors-cream-alpha-80)`,
   }),
   introTitleLine: css({
     display: "block",
@@ -54,7 +54,7 @@ export const styles = {
   introBody: css({
     m: "0",
     maxW: "40rem",
-    color: "rgba(59, 47, 47, 0.82)",
+    color: "inkAlpha.80",
     fontSize: { base: "1.05rem", md: "1.15rem" },
     lineHeight: "1.65",
     textAlign: "center",
@@ -71,11 +71,11 @@ export const styles = {
     p: { base: "4", sm: "5" },
     borderWidth: "1.5px",
     borderStyle: "dashed",
-    borderColor: "rgba(232, 93, 117, 0.32)",
+    borderColor: "roseAlpha.32",
     borderRadius: { base: "1.5rem", sm: "1.85rem" },
     color: "ink",
-    bg: "rgba(255, 247, 237, 0.5)",
-    boxShadow: "inset 0 1px 0 rgba(255, 255, 255, 0.68), 0 8px 18px rgba(59, 47, 47, 0.05)",
+    bg: "creamAlpha.50",
+    boxShadow: `inset 0 1px 0 var(--colors-white-alpha-70), 0 8px 18px var(--colors-ink-alpha-05)`,
   }),
   musicPrompt: css({
     m: "0",

@@ -4,8 +4,8 @@
 
 @layer base {
   :root {
-    color: #1f1f1f;
-    background: #ffffff;
+    color: var(--colors-ink);
+    background: var(--colors-cream);
     font-family: system-ui, "Segoe UI", Roboto, sans-serif;
     font-synthesis: none;
     text-rendering: optimizeLegibility;

@@ -19,7 +19,7 @@ export const styles = {
         transform: "translateY(-1px)",
       },
       _focusVisible: {
-        outline: "3px solid rgba(59, 47, 47, 0.86)",
+        outline: `3px solid var(--colors-ink-alpha-86)`,
         outlineOffset: "3px",
       },
       _active: {
@@ -77,6 +77,12 @@ export const styles = {
           gap: "0",
           p: "0",
         },
+        iconControl: {
+          w: { base: "3rem", sm: "3.35rem" },
+          h: { base: "3rem", sm: "3.35rem" },
+          gap: "0",
+          p: "0",
+        },
         iconMd: {
           w: { base: "3.35rem", sm: "3.8rem" },
           h: { base: "3.35rem", sm: "3.8rem" },
@@ -104,8 +110,8 @@ export const styles = {
           color: "cream",
         },
         secondary: {
-          bg: "rgba(255, 251, 245, 0.86)",
-          boxShadow: "0 4px 10px rgba(59, 47, 47, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.74)",
+          bg: "creamSoft",
+          boxShadow: `0 4px 10px var(--colors-ink-alpha-08), inset 0 1px 0 var(--colors-white-alpha-70)`,
         },
       },
     },
@@ -114,11 +120,11 @@ export const styles = {
         tone: "coral",
         variant: "primary",
         css: {
-          borderColor: "rgba(232, 93, 117, 0.55)",
-          bg: "linear-gradient(180deg, #F86F66 0%, #EA5F59 100%)",
-          boxShadow: "0 8px 16px rgba(232, 93, 117, 0.14), 0 1px 0 rgba(59, 47, 47, 0.06)",
+          borderColor: "roseAlpha.50",
+          bg: `linear-gradient(180deg, var(--colors-coral) 0%, var(--colors-rose) 100%)`,
+          boxShadow: `0 8px 16px var(--colors-rose-alpha-18), 0 1px 0 var(--colors-ink-alpha-06)`,
           _hover: {
-            bg: "linear-gradient(180deg, #FF766B 0%, #EE625E 100%)",
+            bg: `linear-gradient(180deg, var(--colors-rose) 0%, var(--colors-coral) 100%)`,
           },
         },
       },
@@ -128,7 +134,7 @@ export const styles = {
         css: {
           borderColor: "ink",
           bg: "ink",
-          boxShadow: "0 8px 16px rgba(59, 47, 47, 0.14)",
+          boxShadow: `0 8px 16px var(--colors-ink-alpha-14)`,
           _hover: {
             borderColor: "coral",
             bg: "coral",
@@ -139,10 +145,10 @@ export const styles = {
         tone: "coral",
         variant: "secondary",
         css: {
-          borderColor: "rgba(59, 47, 47, 0.12)",
+          borderColor: "inkAlpha.12",
           color: "ink",
           _hover: {
-            borderColor: "rgba(232, 93, 117, 0.34)",
+            borderColor: "roseAlpha.32",
           },
         },
       },
@@ -151,22 +157,22 @@ export const styles = {
         tone: "coral",
         variant: "secondary",
         css: {
-          borderColor: "rgba(232, 93, 117, 0.55)",
+          borderColor: "roseAlpha.50",
           color: "cream",
-          bg: "linear-gradient(180deg, #F86F66 0%, #EA5F59 100%)",
-          boxShadow: "0 8px 16px rgba(232, 93, 117, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.28)",
+          bg: `linear-gradient(180deg, var(--colors-coral) 0%, var(--colors-rose) 100%)`,
+          boxShadow: `0 8px 16px var(--colors-rose-alpha-18), inset 0 1px 0 var(--colors-white-alpha-30)`,
         },
       },
       {
         tone: "ink",
         variant: "secondary",
         css: {
-          borderColor: "rgba(59, 47, 47, 0.1)",
-          color: "rgba(59, 47, 47, 0.76)",
+          borderColor: "inkAlpha.10",
+          color: "inkAlpha.80",
           _hover: {
             borderColor: "rose",
             color: "ink",
-            bg: "rgba(250, 218, 221, 0.82)",
+            bg: "blushAlpha.80",
           },
         },
       },
@@ -176,7 +182,7 @@ export const styles = {
         css: {
           color: "ink",
           _hover: {
-            bg: "rgba(250, 218, 221, 0.52)",
+            bg: "blushAlpha.50",
           },
         },
       },

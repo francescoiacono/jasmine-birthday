@@ -210,18 +210,23 @@ export type Slide =
 - Do not introduce `tailwind-merge`; it is unnecessary with PandaCSS unless the styling approach changes.
 - Keep global CSS in `src/index.css` limited to Panda layers, resets, and document-level defaults.
 - The generated `styled-system` folder is ignored; run `vp run panda:codegen` if it needs to be recreated.
+- Keep app colors in `panda.config.ts` and use those Panda tokens in component styles instead of one-off hex or rgba values.
 - Prefer design tokens for repeated colors, spacing, radii, shadows, and typography.
 - Preserve the intended visual direction: warm, personal, polished, travel-journal inspired, birthday-passport themed, and mobile-first.
 
-Suggested visual tokens:
+Core visual tokens:
 
 ```ts
 colors: {
   cream: { value: "#FFF7ED" },
+  creamSoft: { value: "#FFFBF5" },
   blush: { value: "#FADADD" },
+  blushDeep: { value: "#F6A9B4" },
   coral: { value: "#F9735B" },
   rose: { value: "#E85D75" },
   ink: { value: "#3B2F2F" },
+  inkDeep: { value: "#2C2220" },
+  gold: { value: "#A17029" },
   skyMuted: { value: "#A9C7D8" },
 }
 ```

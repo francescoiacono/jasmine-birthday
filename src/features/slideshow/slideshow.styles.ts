@@ -7,8 +7,7 @@ export const styles = {
     overflow: "hidden",
     color: "ink",
     bg: "cream",
-    backgroundImage:
-      "linear-gradient(180deg, rgba(250, 218, 221, 0.46), rgba(255, 247, 237, 0.82) 34%, rgba(169, 199, 216, 0.34))",
+    backgroundImage: `linear-gradient(180deg, var(--colors-blush-alpha-50), var(--colors-cream-alpha-80) 34%, var(--colors-sky-muted-alpha-35))`,
     fontFamily: "system-ui, 'Segoe UI', Roboto, sans-serif",
   }),
   tripScreen: css({
