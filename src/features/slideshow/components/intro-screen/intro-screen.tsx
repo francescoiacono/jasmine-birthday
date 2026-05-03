@@ -1,6 +1,6 @@
-import clsx from "clsx";
 import { Music, Plane } from "lucide-react";
 import { copy } from "@/i18n/copy";
+import { Button } from "../button";
 import { BirthdayPassport } from "../birthday-passport";
 import { styles } from "./intro-screen.styles";
 
@@ -44,40 +44,33 @@ export const IntroScreen = ({ musicEnabled, onChooseMusic, onStart }: IntroScree
             {copy.slideshow.musicPrompt}
           </p>
           <div className={styles.choiceGrid}>
-            <button
+            <Button
               aria-pressed={musicEnabled === true}
-              className={clsx(
-                styles.choiceButton,
-                musicEnabled === true && styles.choiceButtonSelected,
-              )}
-              type="button"
+              leftIcon={<Music aria-hidden="true" size={24} />}
+              selected={musicEnabled === true}
               onClick={() => onChooseMusic(true)}
             >
-              <Music aria-hidden="true" size={24} />
               {copy.slideshow.musicYes}
-            </button>
-            <button
+            </Button>
+            <Button
               aria-pressed={musicEnabled === false}
-              className={clsx(
-                styles.choiceButton,
-                musicEnabled === false && styles.choiceButtonSelected,
-              )}
-              type="button"
+              selected={musicEnabled === false}
               onClick={() => onChooseMusic(false)}
             >
               {copy.slideshow.musicNo}
-            </button>
+            </Button>
           </div>
         </div>
-        <button
-          className={styles.primaryButton}
+        <Button
+          fullWidth
           disabled={musicEnabled === null}
-          type="button"
+          rightIcon={<Plane aria-hidden="true" size={19} />}
+          size="lg"
+          variant="primary"
           onClick={onStart}
         >
           {copy.slideshow.startButton}
-          <Plane aria-hidden="true" size={19} />
-        </button>
+        </Button>
       </div>
     </div>
   </section>

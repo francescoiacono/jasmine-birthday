@@ -1,5 +1,6 @@
 import { ArrowLeft, ArrowRight, RotateCcw } from "lucide-react";
 import { copy } from "@/i18n/copy";
+import { Button } from "../button";
 import { styles } from "./slideshow-controls.styles";
 
 /** Props for previous, next, and replay controls. */
@@ -24,36 +25,39 @@ export const SlideshowControls = ({
   onReplay,
 }: SlideshowControlsProps) => (
   <footer className={styles.controls}>
-    <button
+    <Button
       aria-label={copy.slideshow.previousButton}
-      className={styles.navButton}
+      className={styles.previousButton}
       disabled={!canGoBack}
+      leftIcon={<ArrowLeft aria-hidden="true" size={26} />}
+      size="iconMd"
       title={copy.slideshow.previousButton}
-      type="button"
+      tone="ink"
       onClick={onPrevious}
-    >
-      <ArrowLeft aria-hidden="true" size={26} />
-    </button>
+    />
 
     {isFinalSlide ? (
       <div className={styles.replayArea}>
-        <button className={styles.replayButton} type="button" onClick={onReplay}>
-          <RotateCcw aria-hidden="true" size={18} />
+        <Button
+          fullWidth
+          leftIcon={<RotateCcw aria-hidden="true" size={18} />}
+          size="md"
+          variant="primary"
+          onClick={onReplay}
+        >
           {copy.slideshow.replayButton}
-        </button>
+        </Button>
       </div>
     ) : (
-      <>
-        <button
-          aria-label={copy.slideshow.nextButton}
-          className={styles.nextButton}
-          title={copy.slideshow.nextButton}
-          type="button"
-          onClick={onNext}
-        >
-          <ArrowRight aria-hidden="true" size={30} />
-        </button>
-      </>
+      <Button
+        aria-label={copy.slideshow.nextButton}
+        className={styles.nextButton}
+        leftIcon={<ArrowRight aria-hidden="true" size={30} />}
+        size="iconLg"
+        title={copy.slideshow.nextButton}
+        variant="primary"
+        onClick={onNext}
+      />
     )}
   </footer>
 );
