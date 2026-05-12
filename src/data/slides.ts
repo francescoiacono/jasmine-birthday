@@ -50,8 +50,9 @@ export const slides = [
   {
     id: "where-it-all-began-opening",
     type: "message",
-    title: "A little trip for your birthday",
-    body: "Since you are far away this year, I made you a tiny passport through some of my favourite Jasmine moments.",
+    messageLayout: "postcard",
+    title: "A little trip down memory lane for our favourite traveller",
+    body: "We may not be able to celebrate side by side this year, but we hope that this little gift is a reminder that you’re always in our heads and in our hearts, not just today but always.",
     soundtrack: soundtrack.prettyGirl,
   },
   {
@@ -66,7 +67,7 @@ export const slides = [
   {
     id: "where-it-all-began-1",
     type: "photo-collage",
-    caption: "Freshers fun, and coolest colleagues",
+    caption: "Freshers fun and coolest colleagues",
     captionPlacement: "top",
     images: [
       {
@@ -82,8 +83,9 @@ export const slides = [
   {
     id: "where-it-all-began-ending",
     type: "message",
-    title: "END OF THE BEGINNING",
-    body: "Since you are far away this year, I made you a tiny passport through some of my favourite Jasmine moments.",
+    messageLayout: "chapter-ending",
+    title: "Where it all began",
+    body: "We owe a big thank you to Gardens uni halls and to the fox on the hill for bringing together these two special friendships, that turned into a deep rooted family filled with more love than we ever expected.",
   },
 
   {
@@ -98,8 +100,7 @@ export const slides = [
   {
     id: "golden-oldies",
     type: "photo-collage",
-    title: "The Golden Oldies",
-    caption: "",
+    caption: "Baby us and all our phases",
     images: [
       {
         src: theGoldenOldies1,
@@ -122,8 +123,9 @@ export const slides = [
   {
     id: "golden-oldies-ending",
     type: "message",
-    title: "END OF THE GOLDEN OLDIES",
-    body: "PAPAPAPAPAPAPAPAPAPAPAPAPAPAPAPAPAPAPA",
+    messageLayout: "chapter-ending",
+    title: "The Golden Oldies",
+    body: "Looking back on these first moments together, makes us appreciate all the growth and life changes we have been through while always having eachother. Young us didn’t know that these moments we were living together would become some of the most treasured memories.",
   },
 
   {
@@ -139,8 +141,7 @@ export const slides = [
   {
     id: "halloween-1",
     type: "photo-collage",
-    title: "The Halloweens",
-    caption: "",
+    caption: "Scary? Not really. Iconic? Always.",
     images: [
       {
         src: halloween1,
@@ -163,8 +164,9 @@ export const slides = [
   {
     id: "halloween-ending",
     type: "message",
-    title: "END OF THE HALLOWEENS",
-    body: "PAPAPAPAPAPAPAPAPAPAPAPAPAPAPAPAPAPAPA",
+    messageLayout: "chapter-ending",
+    title: "The Halloweens",
+    body: "Always an absolute staple in our yearly antics. The most fun and hectic days getting ourselves (and the house) ready, and the most silly and funny nights celebrating.",
   },
 
   {
@@ -179,8 +181,7 @@ export const slides = [
   {
     id: "birthdays",
     type: "photo-collage",
-    title: "The Birthdays",
-    caption: "",
+    caption: "Cheers to some good times",
     images: [
       {
         src: birthdays1,
@@ -203,8 +204,8 @@ export const slides = [
   {
     id: "birthdays-2",
     type: "photo-collage",
-    title: "And more...",
-    caption: "",
+    caption: "Cheers to us",
+    captionPlacement: "top",
     images: [
       {
         src: birthdays5,
@@ -227,8 +228,9 @@ export const slides = [
   {
     id: "birthdays-ending",
     type: "message",
-    title: "END OF THE BIRTHDAYS",
-    body: "PAPAPAPAPAPAPAPAPAPAPAPAPAPAPAPAPAPAPA",
+    messageLayout: "chapter-ending",
+    title: "The Birthdays",
+    body: "Even though we’re not together for the birthdays this year, we have nothing but gratitude for all the celebrations we’ve had together. each one a reminder of another year we’ve been lucky enough to have you in our lives.",
   },
 
   {
@@ -244,7 +246,7 @@ export const slides = [
   {
     id: "holidays-together",
     type: "photo-collage",
-    caption: "",
+    caption: "Beach days and sightseeing",
     images: [
       {
         src: holidays1,
@@ -267,8 +269,7 @@ export const slides = [
   {
     id: "holidays-together-2",
     type: "photo-collage",
-    title: "And more...",
-    caption: "",
+    caption: "Sunsets and shared toilets",
     images: [
       {
         src: holidays5,
@@ -291,8 +292,9 @@ export const slides = [
   {
     id: "holidays-together-ending",
     type: "message",
-    title: "END OF THE HOLIDAYS TOGETHER",
-    body: "PAPAPAPAPAPAPAPAPAPAPAPAPAPAPAPAPAPAPA",
+    messageLayout: "chapter-ending",
+    title: "The Holidays Together",
+    body: "Amsterdam, Barca, camping trips, Greece, Cumbria, Ischia, and future endeavours pending",
   },
 
   {
@@ -307,8 +309,7 @@ export const slides = [
   {
     id: "good-times",
     type: "photo-collage",
-    title: "The All Around Good Times",
-    caption: "",
+    caption: "Just some of many",
     images: [
       {
         src: goodTimes1,
@@ -331,8 +332,9 @@ export const slides = [
   {
     id: "good-times-ending",
     type: "message",
-    title: "END OF THE ALL AROUND GOOD TIMES",
-    body: "PAPAPAPAPAPAPAPAPAPAPAPAPAPAPAPAPAPAPA",
+    messageLayout: "chapter-ending",
+    title: "The All Around Good Times",
+    body: "Belly laughs, sillyness, singing and dancing, naughtiness, wholesomeness and everything in between. Whether it’s been parties or regular days, every moment with you is so treasured.",
   },
   {
     id: "aunti-jas-intro",
@@ -347,8 +349,7 @@ export const slides = [
   {
     id: "aunti-jas-1",
     type: "photo-collage",
-    title: "Aunti Jas' First Hello",
-    caption: "",
+    caption: "A new tiny family member",
     images: [
       {
         src: auntieJas1,
@@ -369,10 +370,15 @@ export const slides = [
     ],
   },
   {
+    id: "aunti-jas-ending",
+    type: "message",
+    messageLayout: "chapter-ending",
+    title: "Aunti Jas' First Hello",
+    body: "Having you by our side whilst the little one was pending, will forever be one of the most sacred chapters of our lives. We wouldn’t change it for the world. This little boy has no idea of all the love and memories that are coming his way with the bestest auntie.",
+  },
+  {
     id: "where-it-all-began-video",
     type: "video",
-    title: "Freshers in motion",
-    caption: "A little moving proof of exactly where the story started.",
     video: {
       src: whereItAllBeganVideo,
       label: "A short selfie video of two friends smiling together under colourful lights.",
@@ -381,8 +387,6 @@ export const slides = [
   {
     id: "golden-oldies-video",
     type: "video",
-    title: "Golden oldies, live",
-    caption: "Some memories are better when you can hear the laugh too.",
     video: {
       src: goldenOldiesVideo,
       label: "A short close-up video of two friends laughing together.",
@@ -391,8 +395,6 @@ export const slides = [
   {
     id: "birthdays-video",
     type: "video",
-    title: "A birthday clip",
-    caption: "Because some birthday memories need motion.",
     video: {
       src: birthdaysVideo,
       label: "A short birthday party video with people dancing together.",
@@ -401,8 +403,6 @@ export const slides = [
   {
     id: "holidays-together-video",
     type: "video",
-    title: "Holiday evidence",
-    caption: "A tiny clip from the travel files.",
     video: {
       src: holidaysVideo,
       label: "A short nighttime holiday video with friends in a dark reflected scene.",

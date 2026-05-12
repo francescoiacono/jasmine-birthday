@@ -41,6 +41,9 @@ export interface SlideVideo {
 /** Supported positions for slide captions. */
 export type CaptionPlacement = "bottom" | "top";
 
+/** Visual treatments available for text-only message slides. */
+export type MessageLayout = "postcard" | "chapter-ending";
+
 /** Audio track that can be cued by a slideshow slide. */
 export interface SlideSoundtrack {
   /** Stable identifier for the audio track. */
@@ -65,6 +68,8 @@ interface BaseSlide {
 export interface MessageSlide extends BaseSlide {
   /** Slide variant used to select the renderer. */
   type: "message";
+  /** Visual treatment used by the message renderer. */
+  messageLayout: MessageLayout;
   /** Optional main text content for the slide. */
   body?: string;
 }
