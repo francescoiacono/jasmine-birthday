@@ -32,5 +32,6 @@ export const en = {
     slideStatus: (current: number, total: number) => `${current} of ${total}`,
     soundtrackFallback: "music",
     startButton: "Start the trip",
+    videoFallback: "Your browser does not support this video.",
   },
 } as const;

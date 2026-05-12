@@ -14,6 +14,10 @@ export const getSlideImageSources = (slide: Slide): readonly string[] => {
     return slide.images.map((image) => image.src);
   }
 
+  if (slide.type === "video") {
+    return slide.video.poster ? [slide.video.poster.src] : [];
+  }
+
   return [];
 };
 

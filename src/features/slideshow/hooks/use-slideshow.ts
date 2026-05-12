@@ -3,8 +3,10 @@ import { slides, type Slide, type SlideSoundtrack } from "@/data";
 import { clampSlideIndex, getActiveSlideSoundtrack, preloadSlideImages } from "../utils";
 
 const soundtrackVolume = 0.72;
+const soundtrackVideoDuckedVolume = 0.18;
 const soundtrackFadeInDurationMs = 900;
 const soundtrackFadeOutDurationMs = 650;
+const soundtrackDuckingFadeDurationMs = 360;
 
 /** Keeps an audio volume value inside the browser-supported range. */
 const clampAudioVolume = (volume: number) => Math.min(Math.max(volume, 0), 1);
@@ -71,6 +73,8 @@ export const useSlideshow = (): UseSlideshowResult => {
   const isFinalSlide = slide.type === "final";
   const canGoBack = currentIndex > 0;
   const canControlMusic = hasStarted && activeSoundtrack !== undefined;
+  const activeSoundtrackVolume =
+    slide.type === "video" ? soundtrackVideoDuckedVolume : soundtrackVolume;
 
   /** Starts a new audio operation so stale async playback work can be ignored. */
   const beginAudioOperation = useCallback(() => {
@@ -165,10 +169,13 @@ export const useSlideshow = (): UseSlideshowResult => {
 
   /** Starts or switches the soundtrack to the requested track with a volume fade. */
   const playSoundtrack = useCallback(
-    async (soundtrack: SlideSoundtrack) => {
+    async (soundtrack: SlideSoundtrack, targetVolume: number) => {
       const operationId = beginAudioOperation();
       const audioElement = getAudioElement();
       const isNewSoundtrack = activeSoundtrackIdRef.current !== soundtrack.id;
+      const fadeDuration = isNewSoundtrack
+        ? soundtrackFadeInDurationMs
+        : soundtrackDuckingFadeDurationMs;
       audioElement.loop = true;
 
       if (isNewSoundtrack) {
@@ -197,7 +204,7 @@ export const useSlideshow = (): UseSlideshowResult => {
         return;
       }
 
-      await fadeAudioVolume(audioElement, soundtrackVolume, soundtrackFadeInDurationMs);
+      await fadeAudioVolume(audioElement, targetVolume, fadeDuration);
     },
     [beginAudioOperation, fadeAudioVolume, getAudioElement, isCurrentAudioOperation],
   );
@@ -248,8 +255,17 @@ export const useSlideshow = (): UseSlideshowResult => {
       return;
     }
 
-    void playSoundtrack(activeSoundtrack).catch(() => setIsMusicPlaying(false));
-  }, [activeSoundtrack, canControlMusic, isMusicPlaying, pauseSoundtrack, playSoundtrack]);
+    void playSoundtrack(activeSoundtrack, activeSoundtrackVolume).catch(() =>
+      setIsMusicPlaying(false),
+    );
+  }, [
+    activeSoundtrack,
+    activeSoundtrackVolume,
+    canControlMusic,
+    isMusicPlaying,
+    pauseSoundtrack,
+    playSoundtrack,
+  ]);
 
   useEffect(
     () => () => {
@@ -296,7 +312,9 @@ export const useSlideshow = (): UseSlideshowResult => {
 
     if (musicEnabled && activeSoundtrack !== undefined) {
       setIsMusicPlaying(true);
-      void playSoundtrack(activeSoundtrack).catch(() => setIsMusicPlaying(false));
+      void playSoundtrack(activeSoundtrack, activeSoundtrackVolume).catch(() =>
+        setIsMusicPlaying(false),
+      );
     }
 
     setHasStarted(true);
@@ -321,7 +339,9 @@ export const useSlideshow = (): UseSlideshowResult => {
     }
 
     setIsMusicPlaying(true);
-    void playSoundtrack(activeSoundtrack).catch(() => setIsMusicPlaying(false));
+    void playSoundtrack(activeSoundtrack, activeSoundtrackVolume).catch(() =>
+      setIsMusicPlaying(false),
+    );
   };
 
   return {

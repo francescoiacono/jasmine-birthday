@@ -6,6 +6,39 @@ import { styles } from "./slide-stage.styles";
 
 const swipeThreshold = 44;
 
+/** Returns the visible text only when a slide field contains non-whitespace content. */
+const getVisibleText = (value: string | undefined) => {
+  const trimmedValue = value?.trim();
+
+  return trimmedValue ? value : undefined;
+};
+
+/** Builds a fallback accessible label for slides that do not render a title heading. */
+const getSlideAriaLabel = (slide: Slide) => {
+  const title = getVisibleText(slide.title);
+
+  if (title) {
+    return undefined;
+  }
+
+  if (slide.type === "single-photo") {
+    return getVisibleText(slide.caption) ?? getVisibleText(slide.image.alt);
+  }
+
+  if (slide.type === "photo-collage") {
+    return (
+      getVisibleText(slide.caption) ??
+      slide.images.map((image) => getVisibleText(image.alt)).find(Boolean)
+    );
+  }
+
+  if (slide.type === "video") {
+    return getVisibleText(slide.caption) ?? getVisibleText(slide.video.label);
+  }
+
+  return getVisibleText(slide.body);
+};
+
 /** Props for the animated slide stage and gesture handling. */
 export interface SlideStageProps {
   /** Slide currently shown in the stage. */
@@ -22,6 +55,8 @@ export const SlideStage = ({ slide, direction, onNext, onPrevious }: SlideStageP
   const shouldReduceMotion = useReducedMotion();
   const pointerStartX = useRef<number | null>(null);
   const didSwipe = useRef(false);
+  const hasTitle = Boolean(getVisibleText(slide.title));
+  const ariaLabel = getSlideAriaLabel(slide);
 
   const handlePointerDown = (event: PointerEvent<HTMLElement>) => {
     pointerStartX.current = event.clientX;
@@ -82,7 +117,8 @@ export const SlideStage = ({ slide, direction, onNext, onPrevious }: SlideStageP
     >
       <AnimatePresence custom={direction} initial={false}>
         <motion.article
-          aria-labelledby={`slide-title-${slide.id}`}
+          aria-label={ariaLabel}
+          aria-labelledby={hasTitle ? `slide-title-${slide.id}` : undefined}
           className={styles.slideArticle}
           exit={{
             opacity: 0,

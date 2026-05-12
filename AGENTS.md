@@ -31,7 +31,7 @@ MVP scope:
 
 - Show a mobile-first intro screen with a clear start action.
 - Offer a music choice before the slideshow begins, using a visible `Play with music?` toggle or yes/no choice.
-- Present a sequence of full-screen slides containing memories, photos, collages, short messages, and birthday wishes.
+- Present a sequence of full-screen slides containing memories, photos, collages, short videos, short messages, and birthday wishes.
 - Support simple story-like navigation: tap or swipe forward and backward.
 - Show lightweight progress feedback so the viewer knows where they are in the journey.
 - End on a heartfelt final slide with a single `Replay the trip` action.
@@ -42,7 +42,7 @@ Technical direction:
 - Planned stack is Vite+ + React + TypeScript, PandaCSS, Lucide React, Motion, `clsx`, and optionally `canvas-confetti` for the final moment.
 - No router is needed. Keep the app as a single, state-driven slideshow experience.
 - Store slide content in typed data files rather than hard-coding it directly into components.
-- Serve photos as local Vite assets from `src/assets` unless the project grows beyond the agreed scope.
+- Serve photos and videos as local Vite assets from `src/assets` unless the project grows beyond the agreed scope.
 - Optimise images manually before committing them, favouring WebP where practical.
 - Deploy with Docker on a VPS using Dokploy.
 - The domain is managed through Cloudflare.
@@ -77,7 +77,7 @@ Technical direction:
 - Put each slideshow subcomponent in its own lowercase kebab-case folder with a `.tsx` file, a colocated `.styles.ts` file, and an `index.ts` export.
 - Put shared reusable UI under `src/components/` only when it is genuinely useful outside the slideshow feature.
 - Put typed slide content under `src/data/`.
-- Put photos and audio under `src/assets/`.
+- Put photos, videos, and audio under `src/assets/`.
 - Use the `@/` import alias for shared or cross-feature imports from `src`.
 - Add entry points with `index.ts` when they make imports cleaner, such as `@/app`, `@/data`, or `@/features/slideshow`.
 
@@ -90,6 +90,7 @@ src/
   assets/
     audio/
     photos/
+    videos/
   components/
   data/
     slides.ts
@@ -114,13 +115,17 @@ src/
 ## Slide Data
 
 - Define slides in TypeScript data files, not inline in JSX.
-- Use discriminated union types for slide variants such as intro, message, single photo, collage, and final slide.
+- Use discriminated union types for slide variants such as intro, message, single photo, collage, video, and final slide.
 - Define reusable soundtrack track metadata in `src/data/soundtrack.ts`, importing local audio assets from `src/assets/audio/`.
 - Use an optional `soundtrack` cue on a slide to start that track from the slide onward; the cue remains active until another slide defines a different soundtrack.
 - Keep slide copy concise and intentional.
 - Every informative image needs useful alt text in the slide data.
 - Decorative images should be marked so components can render empty alt text.
 - Multi-photo slides should describe each image individually rather than using one generic alt value.
+- Video slides should use local imported video assets, include an accessible video label, and provide WebVTT captions or descriptions when the video needs them.
+- Video slides should be audible by default; set `muted: true` only for clips where silent autoplay is intentional.
+- Video slides should loop by default; set `loop: false` only when a clip must play once.
+- Keep the background soundtrack playing during video slides, but duck its volume so the video audio remains primary.
 
 Example direction:
 
@@ -150,6 +155,16 @@ export type Slide =
     }
   | {
       /** Slide variant used to select the renderer. */
+      type: "video";
+      /** Short slide heading shown to the viewer. */
+      title: string;
+      /** Short supporting message for the slide. */
+      caption: string;
+      /** Imported Vite asset URL and accessible label for the video. */
+      video: { src: string; label: string; poster?: { src: string; alt: string } };
+    }
+  | {
+      /** Slide variant used to select the renderer. */
       type: "message";
       /** Short slide heading shown to the viewer. */
       title: string;
@@ -162,13 +177,18 @@ export type Slide =
 
 - Use local imported Vite assets for slideshow images by default.
 - Put primary photos in `src/assets/photos/`.
+- Put slideshow videos in `src/assets/videos/`.
 - Put music or sound files in `src/assets/audio/`.
 - Prefer WebP for photos unless another format is necessary.
+- Prefer compressed MP4 for broad playback support, with WebM only as an optional secondary source if needed later.
 - Keep source/original photos outside the app if they are large and not directly used at runtime.
+- Keep source/original videos outside the app if they are large and not directly used at runtime.
 - Target mobile-friendly images, usually around 1080px to 1440px wide for full-screen photos.
 - Use smaller exports for collage-only photos that never display full-screen.
 - Aim for roughly 150KB to 350KB per optimised photo when practical.
+- Keep runtime video clips short and manually compressed; use poster images where a video may take time to load.
 - Avoid loading every image upfront when the slideshow may contain many photos.
+- Do not eager-preload full video files; rely on native `preload="metadata"` and preload poster images only.
 - Preload the first few slides after the intro and then preload the next one or two slides as the viewer advances.
 - For multi-photo slides, preload only the upcoming slide's images and lazy-load secondary images where appropriate.
 - Use Cloudflare as a normal CDN in front of the VPS, but do not introduce Cloudflare Images unless the project grows into a reusable upload-based app or requires dynamic image transformations.
