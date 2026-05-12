@@ -14,7 +14,7 @@ shopt -s nullglob nocaseglob
 
 converted=0
 
-for file in "$PHOTO_DIR"/*.{jpg,jpeg,png,heic}; do
+for file in "$PHOTO_DIR"/*.{jpg,jpeg,png,PNG,heic,HEIC}; do
   filename="$(basename "$file")"
   name="${filename%.*}"
 
