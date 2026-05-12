@@ -1,6 +1,7 @@
 export const en = {
   slideshow: {
     birthdayName: "Jasmine",
+    chapterStamp: "Memory stamped",
     finalStamp: "Birthday arrival",
     introBody:
       "A warm little travel journal for the person who makes ordinary days feel worth collecting.",

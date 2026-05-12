@@ -1,6 +1,6 @@
 import { useEffect, useRef, type SyntheticEvent } from "react";
 import clsx from "clsx";
-import { Gift, Heart } from "lucide-react";
+import { Gift, Heart, Stamp } from "lucide-react";
 import type { CaptionPlacement, Slide } from "@/data";
 import { copy } from "@/i18n/copy";
 import { styles } from "./slide-content.styles";
@@ -42,6 +42,18 @@ const stopStageNavigation = (event: SyntheticEvent<HTMLElement>) => {
 interface VideoSlideContentProps {
   /** Video slide content to render. */
   slide: Extract<Slide, { type: "video" }>;
+}
+
+/** Props for rendering a postcard-style message slide. */
+interface PostcardSlideContentProps {
+  /** Message slide content to render as a postcard. */
+  slide: Extract<Slide, { type: "message" }>;
+}
+
+/** Props for rendering a simpler stamped-note message. */
+interface StampedNoteSlideContentProps {
+  /** Message or final slide content to render as a stamped note. */
+  slide: Extract<Slide, { type: "message" | "final" }>;
 }
 
 const VideoSlideContent = ({ slide }: VideoSlideContentProps) => {
@@ -112,6 +124,67 @@ const VideoSlideContent = ({ slide }: VideoSlideContentProps) => {
           )}
         </div>
       )}
+    </div>
+  );
+};
+
+const PostcardSlideContent = ({ slide }: PostcardSlideContentProps) => {
+  const title = getVisibleText(slide.title);
+  const body = getVisibleText(slide.body);
+
+  return (
+    <div className={styles.postcard}>
+      <div className={styles.postageStamp} aria-hidden="true">
+        <Stamp size={30} strokeWidth={1.6} />
+      </div>
+
+      <div className={styles.postcardContent}>
+        <div className={styles.postcardMessage}>
+          <div className={styles.postcardLabel}>
+            <Gift aria-hidden="true" size={15} />
+            {copy.slideshow.messageStamp}
+          </div>
+          {title && (
+            <h2 className={styles.slideTitle} id={`slide-title-${slide.id}`}>
+              {title}
+            </h2>
+          )}
+          {body && <p className={styles.messageBody}>{body}</p>}
+        </div>
+
+        <div className={styles.postcardAddress} aria-hidden="true">
+          <span />
+          <span />
+          <span />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const StampedNoteSlideContent = ({ slide }: StampedNoteSlideContentProps) => {
+  const isFinalSlide = slide.type === "final";
+  const title = getVisibleText(slide.title);
+  const body = getVisibleText(slide.body);
+  const stampLabel = isFinalSlide ? copy.slideshow.finalStamp : copy.slideshow.chapterStamp;
+  const NoteLabelIcon = isFinalSlide ? Heart : Stamp;
+
+  return (
+    <div className={clsx(styles.stampedNote, isFinalSlide && styles.stampedNoteFinal)}>
+      <div className={styles.stampedNoteMark} aria-hidden="true">
+        <span />
+        <span />
+      </div>
+      <div className={styles.stampedNoteLabel}>
+        <NoteLabelIcon aria-hidden="true" size={15} />
+        {stampLabel}
+      </div>
+      {title && (
+        <h2 className={styles.noteTitle} id={`slide-title-${slide.id}`}>
+          {title}
+        </h2>
+      )}
+      {body && <p className={styles.noteBody}>{body}</p>}
     </div>
   );
 };
@@ -195,41 +268,9 @@ export const SlideContent = ({ slide }: SlideContentProps) => {
     return <VideoSlideContent slide={slide} />;
   }
 
-  if (slide.type === "final") {
-    const title = getVisibleText(slide.title);
-    const body = getVisibleText(slide.body);
-
-    return (
-      <div className={styles.passportPage}>
-        <div className={styles.passportStamp}>
-          <Heart aria-hidden="true" size={15} />
-          {copy.slideshow.finalStamp}
-        </div>
-        {title && (
-          <h2 className={styles.slideTitle} id={`slide-title-${slide.id}`}>
-            {title}
-          </h2>
-        )}
-        {body && <p className={styles.messageBody}>{body}</p>}
-      </div>
-    );
+  if (slide.type === "message" && slide.messageLayout === "postcard") {
+    return <PostcardSlideContent slide={slide} />;
   }
 
-  const title = getVisibleText(slide.title);
-  const body = getVisibleText(slide.body);
-
-  return (
-    <div className={styles.passportPage}>
-      <div className={styles.passportStamp}>
-        <Gift aria-hidden="true" size={15} />
-        {copy.slideshow.messageStamp}
-      </div>
-      {title && (
-        <h2 className={styles.slideTitle} id={`slide-title-${slide.id}`}>
-          {title}
-        </h2>
-      )}
-      {body && <p className={styles.messageBody}>{body}</p>}
-    </div>
-  );
+  return <StampedNoteSlideContent slide={slide} />;
 };
