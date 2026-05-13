@@ -181,7 +181,7 @@ export const slides = [
   {
     id: "birthdays",
     type: "photo-collage",
-    caption: "Cheers to some good times",
+    caption: "Birthday nights, big hugs, and the best kind of chaos",
     images: [
       {
         src: birthdays1,
@@ -204,7 +204,7 @@ export const slides = [
   {
     id: "birthdays-2",
     type: "photo-collage",
-    caption: "Cheers to us",
+    caption: "Another year, another reason to celebrate you",
     captionPlacement: "top",
     images: [
       {
@@ -230,7 +230,7 @@ export const slides = [
     type: "message",
     messageLayout: "chapter-ending",
     title: "The Birthdays",
-    body: "Even though we’re not together for the birthdays this year, we have nothing but gratitude for all the celebrations we’ve had together. each one a reminder of another year we’ve been lucky enough to have you in our lives.",
+    body: "Even though we’re not together for the birthdays this year, we have nothing but gratitude for all the celebrations we’ve had together. Each one a reminder of another year we’ve been lucky enough to have you in our lives.",
   },
 
   {
@@ -409,10 +409,28 @@ export const slides = [
     },
   },
   {
-    id: "final-wish",
-    type: "final",
+    id: "final-ordinary-days",
+    type: "message",
+    messageLayout: "chapter-ending",
     soundtrack: soundtrack.sirens,
+    body: "Today we are so grateful for the journey we’ve all been on together. Our friendship and family is one that feels safe, warm, and never changing. Looking back now, we should’ve been more grateful of even the most ordinary days spent with you. Waking up and you coming into our bed while we decide how to drag Francesco out into the sunshine with us. You making your porridge and us making our eggs, the strolls into Greenwich while we talk about anything and everything filled with ice coffees, ice creams, market food. A few ciders and cigs in a pub garden, a movie night and home cooking or takeout. We would do anything to re live one of those days, we didn’t realise how lucky we were whilst we were living them.",
+  },
+  {
+    id: "final-baby-us",
+    type: "message",
+    messageLayout: "chapter-ending",
+    body: "Not to mention a day in the life of baby us, smoking till we could barely speak through our dry mouth. Laughing uncontrollably till our bellies hurt, making the most ridiculous munchy meals, talking about our creative inspirations, listening to music that felt like it was hitting the soul, and having the most special heart to heart chats while we were getting to know each other on such a deep level, we were in the middle of creating a bond so unbreakable and had no idea of the journey we would go on to have together.",
+  },
+  {
+    id: "final-wish-2",
+    type: "message",
+    messageLayout: "chapter-ending",
+    body: "As we mark your 27th year, the strength and resilience you’ve shown this year is undoubtable. You’ve been so adventurous, independent, grounded, thoughtful, you’ve been through ups and downs but have always come back to the same jassy t positive and loving energy that you’ve always had. You love so strongly and you care so deeply about the people and the world around you. You always want to be the best version of yourself whilst your lifting up the people around you. Your friendship has truly felt like home for so many years now. Life may look a little different now but the family, support, and love will always remain the same.",
+  },
+  {
+    id: "final-goodbye",
+    type: "final",
     title: "Happy birthday, Jasmine",
-    body: "I hope today feels warm, funny, a bit ridiculous, and full of reminders that you are loved from wherever we all are.",
+    body: "Thank god for the memories and the life we have being your family. Thank god for another year of our jassy t. Happy birthday beautiful 🩵",
   },
 ] satisfies readonly Slide[];
